@@ -585,10 +585,17 @@ export default class ImageViewer extends React.Component<Props, State> {
           );
       }
     });
-
+    const containerMergedStyles = [{...this.styles.container}, {opacity: this.fadeAnim}];
+    const containerMergedStylesSecond = [
+      {...this.styles.moveBox}, 
+      {
+        transform: [{ translateX: this.positionX }],
+        width: this.width * this.props.imageUrls.length
+      }
+    ];
     return (
       <Animated.View style={{ zIndex: 9 }}>
-        <Animated.View style={{ ...this.styles.container, opacity: this.fadeAnim }}>
+        <Animated.View style={containerMergedStyles}>
           {this!.props!.renderHeader!(this.state.currentShowIndex)}
 
           <View style={this.styles.arrowLeftContainer}>
@@ -604,11 +611,7 @@ export default class ImageViewer extends React.Component<Props, State> {
           </View>
 
           <Animated.View
-            style={{
-              ...this.styles.moveBox,
-              transform: [{ translateX: this.positionX }],
-              width: this.width * this.props.imageUrls.length
-            }}
+            style={containerMergedStylesSecond}
           >
             {ImageElements}
           </Animated.View>
